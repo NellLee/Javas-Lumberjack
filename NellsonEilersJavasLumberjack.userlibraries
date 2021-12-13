@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.openjfx:javafx-controls:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-controls/17-ea+11/javafx-controls-17-ea+11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:win:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-controls/17-ea+11/javafx-controls-17-ea+11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-graphics/17-ea+11/javafx-graphics-17-ea+11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:win:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-graphics/17-ea+11/javafx-graphics-17-ea+11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-base/17-ea+11/javafx-base-17-ea+11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:win:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-base/17-ea+11/javafx-base-17-ea+11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-fxml/17-ea+11/javafx-fxml-17-ea+11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:win:17-ea+11">
+    <archive path="C:/Users/nelll/.m2/repository/org/openjfx/javafx-fxml/17-ea+11/javafx-fxml-17-ea+11-win.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-api:5.7.1">
+    <archive path="C:/Users/nelll/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.1/junit-jupiter-api-5.7.1.jar" />
+  </library>
+  <library name="Maven: org.apiguardian:apiguardian-api:1.1.0">
+    <archive path="C:/Users/nelll/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar" />
+  </library>
+  <library name="Maven: org.opentest4j:opentest4j:1.2.0">
+    <archive path="C:/Users/nelll/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-commons:1.7.1">
+    <archive path="C:/Users/nelll/.m2/repository/org/junit/platform/junit-platform-commons/1.7.1/junit-platform-commons-1.7.1.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1">
+    <archive path="C:/Users/nelll/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.1/junit-jupiter-engine-5.7.1.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-engine:1.7.1">
+    <archive path="C:/Users/nelll/.m2/repository/org/junit/platform/junit-platform-engine/1.7.1/junit-platform-engine-1.7.1.jar" />
+  </library>
+  <library name="Maven: org.controlsfx:controlsfx:11.1.0">
+    <archive path="C:/Users/nelll/.m2/repository/org/controlsfx/controlsfx/11.1.0/controlsfx-11.1.0.jar" />
+  </library>
+</eclipse-userlibraries>
+
