@@ -1,18 +1,7 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import praktikum.fjt.nellsoneilersjavaslumberjack.IslandGenerator;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.Island;
@@ -112,9 +101,23 @@ public class FXMLController {
   @FXML
   MenuItem actorHasWoodMenuItem;
   @FXML
+  Button startSimButton;
+  @FXML
+  MenuItem startSimMenuItem;
+  @FXML
+  Button pauseSimButton;
+  @FXML
+  MenuItem pauseSimMenuItem;
+  @FXML
+  Button stopSimButton;
+  @FXML
+  MenuItem stopSimMenuItem;
+  @FXML
   TextArea programEditor;
   @FXML
   Label statusLabel;
+  @FXML
+  Slider simSpeedSlider;
 
   IslandRegion islandRegion;
 
@@ -126,6 +129,7 @@ public class FXMLController {
   private IslandController islandController;
   private BindingsController bindingsController;
   private EditorController editorController;
+  private SimulationController simulationController;
 
 
   @FXML
@@ -142,6 +146,11 @@ public class FXMLController {
 
     editorController = new EditorController(this);
     editorController.initialize();
+
+    simulationController = new SimulationController(this, island);
+    simulationController.initialize();
+
+
   }
 
   public void updateActorContextMenu() {

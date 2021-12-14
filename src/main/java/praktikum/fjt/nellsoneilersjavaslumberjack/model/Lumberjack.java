@@ -195,4 +195,7 @@ public class Lumberjack {
     }
     return posInDirRight;
   }
+
+  public void main() {
+  }
 }

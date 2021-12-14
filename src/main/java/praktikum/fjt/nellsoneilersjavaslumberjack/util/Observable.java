@@ -1,5 +1,7 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.util;
 
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 
 public class Observable {
@@ -38,9 +40,13 @@ public class Observable {
   }
 
   public void notifyObservers() {
+    //TODO temporal debug
+    System.out.println("Observer notify called from: '" + Thread.currentThread().getName() + "'");
+    System.out.println();
     if (notification) {
       for (Observer observer : observers) {
         observer.update(this);
+
       }
     }
   }

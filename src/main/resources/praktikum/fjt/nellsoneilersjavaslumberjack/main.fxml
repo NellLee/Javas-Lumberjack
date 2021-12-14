@@ -250,7 +250,7 @@
           </Menu>
             <Menu text="_Simulation">
                <items>
-                  <MenuItem text="Start/_Fortsetzen">
+                  <MenuItem fx:id="startSimMenuItem" text="Start/_Fortsetzen">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F10" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
@@ -261,7 +261,7 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <MenuItem text="_Pause">
+                  <MenuItem fx:id="pauseSimMenuItem" text="_Pause">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F11" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
@@ -273,7 +273,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem text="_Stopp">
+                  <MenuItem fx:id="stopSimMenuItem" text="_Stopp">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F12" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
@@ -291,7 +291,7 @@
       </MenuBar>
       <ToolBar>
          <items>
-            <Button mnemonicParsing="false">
+            <Button fx:id="startSimButton" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -303,7 +303,7 @@
                   <Tooltip text="Start/Fortsetzen" />
                </tooltip>
             </Button>
-            <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false">
+            <Button fx:id="pauseSimButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -315,7 +315,7 @@
                   <Tooltip text="Pause" />
                </tooltip>
             </Button>
-            <Button layoutX="54.0" layoutY="13.0" mnemonicParsing="false">
+            <Button fx:id="stopSimButton" layoutX="54.0" layoutY="13.0" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -329,7 +329,7 @@
             </Button>
             <Separator orientation="VERTICAL" />
             <Label text="Geschwindigkeit:" />
-            <Slider majorTickUnit="50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0">
+            <Slider fx:id="simSpeedSlider" majorTickUnit="50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0">
                <tooltip>
                   <Tooltip text="Simulationsgeschwindigkeit" />
                </tooltip>
