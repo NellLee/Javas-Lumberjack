@@ -100,7 +100,7 @@ public class ActorController {
     updateActorContextMenu();
     fxmlCtrl.islandRegion.setOnContextMenuRequested(
         contextMenuEvent -> {
-          if(CoordinateConverterUtil.toModelPos(contextMenuEvent.getX(), contextMenuEvent.getY()).equals(island.getActor().getPosition())) {
+          if(CoordinateConverterUtil.toModelPos(contextMenuEvent.getX(), contextMenuEvent.getY()).equals(island.getActorPosition())) {
             contextMenu.show(fxmlCtrl.stage, contextMenuEvent.getScreenX(),
                 contextMenuEvent.getScreenY());
           }

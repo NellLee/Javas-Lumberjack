@@ -1,5 +1,6 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import praktikum.fjt.nellsoneilersjavaslumberjack.Simulation;
@@ -49,7 +50,7 @@ public class SimulationController {
     }
 
     public void start() {
-        sim = new Simulation(this);
+        sim = new Simulation(this, island);
         sim.setDaemon(true);
         sim.start();
 
@@ -75,18 +76,6 @@ public class SimulationController {
         sim.syncedNotify();
 
         enableOnlyStartButton();
-    }
-
-    public void addActorSimObserver(Observer simObserver) {
-        island.getActorObservable().addObserver(simObserver);
-    }
-
-    public void deleteActorSimObserver(Observer simObserver) {
-        island.getActorObservable().deleteObserver(simObserver);
-    }
-
-    public void runActorMain() {
-        island.getActor().main();
     }
 
     public int getSimSpeed() {

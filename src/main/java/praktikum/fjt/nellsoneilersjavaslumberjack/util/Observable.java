@@ -1,16 +1,14 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.util;
 
-import javafx.application.Platform;
-
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Observable {
 
-  private final ArrayList<Observer> observers;
+  private final CopyOnWriteArrayList<Observer> observers;
   private boolean notification;
 
   public Observable() {
-    observers = new ArrayList<Observer>();
+    observers = new CopyOnWriteArrayList<Observer>();
     notification = true;
   }
 
@@ -26,7 +24,7 @@ public class Observable {
     observers.clear();
   }
 
-  public ArrayList<Observer> getObservers() {
+  public CopyOnWriteArrayList<Observer> getObservers() {
     return observers;
   }
 
@@ -40,13 +38,9 @@ public class Observable {
   }
 
   public void notifyObservers() {
-    //TODO temporal debug
-    System.out.println("Observer notify called from: '" + Thread.currentThread().getName() + "'");
-    System.out.println();
     if (notification) {
       for (Observer observer : observers) {
         observer.update(this);
-
       }
     }
   }

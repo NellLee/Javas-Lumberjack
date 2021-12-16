@@ -1,5 +1,6 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.view;
 
+import java.awt.Toolkit;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -7,6 +8,7 @@ import javafx.scene.control.ButtonType;
 public class AlertFactory {
 
   public static void createError(String message) {
+    Toolkit.getDefaultToolkit().beep();
     createAlertOfType(AlertType.ERROR, message);
   }
 

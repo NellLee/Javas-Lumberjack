@@ -3,6 +3,7 @@ package praktikum.fjt.nellsoneilersjavaslumberjack.view;
 import static praktikum.fjt.nellsoneilersjavaslumberjack.view.ViewConstants.*;
 
 import java.util.Optional;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -47,25 +48,25 @@ public class IslandRegion extends Region {
     island.getSizeObservable().addObserver(new Observer() {
       @Override
       public void update(Observable obs, Object... objects) {
-        drawAll();
+        Platform.runLater(() -> drawAll());
       }
     });
     island.getOceanObservable().addObserver(new Observer() {
       @Override
       public void update(Observable obs, Object... objects) {
-        drawOcean();
+        Platform.runLater(() -> drawOcean());
       }
     });
     island.getPhysicalsObservable().addObserver(new Observer() {
       @Override
       public void update(Observable obs, Object... objects) {
-        drawPhysicals();
+        Platform.runLater(() -> drawPhysicals());
       }
     });
     island.getActorObservable().addObserver(new Observer() {
       @Override
       public void update(Observable obs, Object... objects) {
-        drawActor();
+        Platform.runLater(() -> drawActor());
       }
     });
   }
@@ -264,10 +265,10 @@ public class IslandRegion extends Region {
     GraphicsContext gc = actorCanvas.getGraphicsContext2D();
     gc.clearRect(0, 0, getRegionWidth(), getRegionHeight());
 
-    Position actorPos = island.getActor().getPosition();
+    Position actorPos = island.getActorPosition();
     // The lumberjacks texture is twice as large as a tile
     // Because of this, the rotation is done around a translated origin (0.25 of the width/height)
-    drawRotatedImage(gc, ACTOR_TEXTURE, island.getActor().getDirection().ordinal() * 90, CoordinateConverterUtil.toViewCoord(actorPos.getX()) + CELL_BORDER_SIZE, CoordinateConverterUtil.toViewCoord(actorPos.getY()) + CELL_BORDER_SIZE, 0.25, 0.25);
+    drawRotatedImage(gc, ACTOR_TEXTURE, island.getActorDirection().ordinal() * 90, CoordinateConverterUtil.toViewCoord(actorPos.getX()) + CELL_BORDER_SIZE, CoordinateConverterUtil.toViewCoord(actorPos.getY()) + CELL_BORDER_SIZE, 0.25, 0.25);
   }
 
 

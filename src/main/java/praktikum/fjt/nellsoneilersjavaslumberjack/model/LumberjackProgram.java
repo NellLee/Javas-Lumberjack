@@ -13,7 +13,23 @@ public class LumberjackProgram {
   private String name;
 
   public static final String DIRECTORY = "programs";
-  public static final String PROGRAM_TEMPLATE = "void main() {" + System.lineSeparator().repeat(2) + "}";
+  public static final String PROGRAM_TEMPLATE = """
+// Schreibe dein Programm in folgender Methode.
+void main() {
+  
+}
+
+/* Ausführung:
+*	1) Kompiliere dein Programm
+*	2) Starte die Simulation
+*/
+  
+// Du kannst eigene Methoden definieren und in deinem Programm nutzen.
+public void kehrt() {
+  dreheLinks();
+  dreheLinks();
+}
+  """;
   public static final String EXTENSION = ".java";
 
   public LumberjackProgram(String name) {

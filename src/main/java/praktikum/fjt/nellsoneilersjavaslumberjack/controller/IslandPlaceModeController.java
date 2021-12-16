@@ -37,7 +37,7 @@ public class IslandPlaceModeController {
   private void initializePlaceModeBtnEventHandling() {
     fxmlCtrl.islandRegion.setOnMousePressed(mouseEvent -> {
       Position clickPosition = CoordinateConverterUtil.toModelPos(mouseEvent.getX(), mouseEvent.getY());
-      if(clickPosition.equals(island.getActor().getPosition())) {
+      if(clickPosition.equals(island.getActorPosition())) {
         startDraggingActor();
       } else {
         stopDraggingActor();

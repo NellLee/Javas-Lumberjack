@@ -23,7 +23,11 @@ public class Island {
   private boolean[][] oceanGrid;
   private int height;
   private int width;
+
   private Lumberjack actor;
+  private Position actorPosition;
+  private Direction actorDirection;
+  private boolean actorHasWood = false;
 
   private final Observable sizeObservable = new Observable();
   private final Observable oceanObservable = new Observable();
@@ -31,12 +35,14 @@ public class Island {
   private final Observable actorObservable = new Observable();
 
   public Island(int width, int height) {
+    this(width, height, new Position(0, 0), Direction.RIGHT);
+  }
+
+  public Island(int width, int height, Position actorPosition, Direction actorDirection) {
     createGrids(width, height);
     this.actor = new Lumberjack(this);
-  }
-  public Island(int width, int height, Position actorPos, Direction actorDir) {
-    createGrids(width, height);
-    this.actor = new Lumberjack(this, actorPos, actorDir);
+    this.actorPosition = actorPosition;
+    this.actorDirection = actorDirection;
   }
 
   private void createGrids(int width, int height) {
@@ -57,19 +63,21 @@ public class Island {
   }
 
   public int getHeight() {
-    return height;
+    synchronized (this) {
+      return height;
+    }
   }
 
   public int getWidth() {
-    return width;
+    synchronized (this) {
+      return width;
+    }
   }
-
 
   public void setSize(int newWidth, int newHeight) {
     if(newWidth <= 0 || newHeight <= 0) {
       throw new IllegalArgumentException("Island must have a width/height of at least 1");
     }
-
     Tile[][] tmpPhysObjGrid = new Tile[newWidth][newHeight];
     boolean[][] tmpOceanGrid = new boolean[newWidth][newHeight];
     for(int x = 0; x < newWidth; x++){
@@ -84,19 +92,24 @@ public class Island {
       System.arraycopy(physObjGrid[i], 0, tmpPhysObjGrid[i], 0, minHeight);
       System.arraycopy(oceanGrid[i], 0, tmpOceanGrid[i], 0, minHeight);
     }
-    physObjGrid = tmpPhysObjGrid;
-    oceanGrid = tmpOceanGrid;
-    width = newWidth;
-    height = newHeight;
 
-    if(!posInRange(actor.getPosition())) {
+    synchronized (this) {
+      physObjGrid = tmpPhysObjGrid;
+      oceanGrid = tmpOceanGrid;
+      width = newWidth;
+      height = newHeight;
+    }
+
+    if(!posInRange(getActorPosition())) {
       int newX = 0;
       int newY = 0;
       Position newPos = new Position(newX, newY);
 
       // clear position
       deletePhysObjectAt(newPos);
-      oceanGrid[newX][newY] = false;
+      synchronized (this) {
+        oceanGrid[newX][newY] = false;
+      }
 
       setActorPosition(newPos);
     }
@@ -105,36 +118,54 @@ public class Island {
   }
 
   public Lumberjack getActor() {
-    return actor;
+    synchronized (this) {
+      return actor;
+    }
   }
 
   public void changeActor(Lumberjack newActor) {
     newActor.setIsland(this);
-    newActor.setPosition(actor.getPosition());
-    newActor.setDirection(actor.getDirection());
-    actor = newActor;
+
+    synchronized (this) {
+      actor = newActor;
+    }
+
     actorObservable.notifyObservers();
   }
 
   public boolean posInRange(Position position) {
-    int x = position.getX();
-    int y = position.getY();
-    return (0 <= x && x < width && 0 <= y && y < height);
+    synchronized (this) {
+      int x = position.getX();
+      int y = position.getY();
+      return (0 <= x && x < width && 0 <= y && y < height);
+    }
   }
 
   public boolean posOnLand(Position position) {
-    return (posInRange(position) && !oceanGrid[position.getX()][position.getY()]);
+    if(!posInRange(position)) {
+      return false;
+    }
+    synchronized (this) {
+      return !oceanGrid[position.getX()][position.getY()];
+    }
   }
 
   public boolean hasPhysObjectAt(Position position) {
-    return physObjGrid[position.getX()][position.getY()].getContent().isPresent();
+    synchronized (this) {
+      return physObjGrid[position.getX()][position.getY()].getContent().isPresent();
+    }
   }
 
   public boolean hasTreeAt(Position position) {
     if(!posOnLand(position)) {
       return false;
     }
-    Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+
+    Optional<PhysicalObject> contentOpt;
+    synchronized (this) {
+      contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+    }
+
     if(contentOpt.isEmpty()) {
       return false;
     }
@@ -145,7 +176,12 @@ public class Island {
     if(!posOnLand(position)) {
       return false;
     }
-    Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+
+    Optional<PhysicalObject> contentOpt;
+    synchronized (this) {
+      contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+    }
+
     if(contentOpt.isEmpty()) {
       return false;
     }
@@ -156,7 +192,12 @@ public class Island {
     if(!posOnLand(position)) {
       return false;
     }
-    Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+
+    Optional<PhysicalObject> contentOpt;
+    synchronized (this) {
+      contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+    }
+
     if(contentOpt.isEmpty()) {
       return false;
     }
@@ -170,26 +211,33 @@ public class Island {
   }
 
   public boolean removeWoodAt(Position position) {
+    boolean physObjChanged = false;
+
     if(!posOnLand(position)) {
       return false;
     }
-    Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
-    if(contentOpt.isEmpty()) {
-      return false;
-    }
-    PhysicalObject content = contentOpt.get();
 
-    if (content instanceof Wood) {
-      physObjGrid[position.getX()][position.getY()].clearContent();
-      physicalsObservable.notifyObservers();
-      return true;
-    }else if (content instanceof Stump stump && stump.hasWoodOnTop()) {
-      stump.clearWoodOnTop();
-      physicalsObservable.notifyObservers();
-      return true;
+    synchronized (this) {
+      Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+      if(contentOpt.isEmpty()) {
+        return false;
+      }
+      PhysicalObject content = contentOpt.get();
+
+      if (content instanceof Wood) {
+        physObjGrid[position.getX()][position.getY()].clearContent();
+        physObjChanged = true;
+      }else if (content instanceof Stump stump && stump.hasWoodOnTop()) {
+        stump.clearWoodOnTop();
+        physObjChanged = true;
+      }
     }
 
-    return false;
+    if(physObjChanged) {
+      physicalsObservable.notifyObservers();
+    }
+
+    return physObjChanged;
   }
 
   public boolean setWoodAt(Position position) {
@@ -197,7 +245,11 @@ public class Island {
       return false;
     }
 
-    Optional<PhysicalObject> contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+    Optional<PhysicalObject> contentOpt;
+    synchronized (this) {
+      contentOpt = physObjGrid[position.getX()][position.getY()].getContent();
+    }
+
     if(contentOpt.isPresent()) {
       return setWoodOnPhysObject(contentOpt.get());
     }
@@ -207,19 +259,29 @@ public class Island {
   }
 
   public boolean setWoodOnPhysObject(PhysicalObject content) {
-    if (content instanceof Stump stump && !stump.hasWoodOnTop()) {
-      stump.setWoodOnTop(new Wood());
-      physicalsObservable.notifyObservers();
-      return true;
+    boolean success = false;
+
+    synchronized (this) {
+      if (content instanceof Stump stump && !stump.hasWoodOnTop()) {
+        stump.setWoodOnTop(new Wood());
+        success =  true;
+      }
     }
-    return false;
+
+    if(success) {
+      physicalsObservable.notifyObservers();
+    }
+
+    return success;
   }
 
   public void setPhysObjectAt(Position position, PhysicalObject physObject) {
-    if(!posOnLand(position) || actor.getPosition() == position ) {
+    if(!posOnLand(position) || getActorPosition() == position ) {
       return;
     }
-    physObjGrid[position.getX()][position.getY()].setContent(physObject);
+    synchronized (this) {
+      physObjGrid[position.getX()][position.getY()].setContent(physObject);
+    }
     physicalsObservable.notifyObservers();
   }
 
@@ -237,11 +299,13 @@ public class Island {
   }
 
   public void setOceanAt(Position position, boolean ocean) {
-    if(!posInRange(position) || actor.getPosition() == position) {
+    if(!posInRange(position) || getActorPosition() == position) {
       return;
     }
     deletePhysObjectAt(position);
-    oceanGrid[position.getX()][position.getY()] = ocean;
+    synchronized (this) {
+      oceanGrid[position.getX()][position.getY()] = ocean;
+    }
     oceanObservable.notifyObservers();
   }
 
@@ -249,18 +313,98 @@ public class Island {
     setOceanAt(position, true);
   }
   public boolean hasOceanAt(Position position) {
-    return oceanGrid[position.getX()][position.getY()];
+    synchronized (this) {
+      return oceanGrid[position.getX()][position.getY()];
+    }
   }
 
   public Optional<PhysicalObject> getPhysObjectAt(Position position) {
-    return physObjGrid[position.getX()][position.getY()].getContent();
+    synchronized (this) {
+      return physObjGrid[position.getX()][position.getY()].getContent();
+    }
+  }
+
+  public boolean isActorHasWood() {
+    synchronized (this) {
+      return actorHasWood;
+    }
+  }
+
+  public void setActorHasWood(boolean actorHasWood) {
+    synchronized (this) {
+      this.actorHasWood = actorHasWood;
+    }
+  }
+
+  public Direction getActorDirection() {
+    synchronized (this) {
+      return actorDirection;
+    }
+  }
+
+  void setActorDirection(int directionInt) {
+    setActorDirection(Direction.values()[Math.floorMod((directionInt), Direction.values().length)]);
+  }
+
+  void setActorDirection(Direction actorDirection) {
+    synchronized (this) {
+      this.actorDirection = actorDirection;
+    }
+    actorObservable.notifyObservers();
+  }
+
+  public Position getActorPosition() {
+    synchronized (this) {
+      return actorPosition;
+    }
   }
 
   public void setActorPosition(Position pos) {
     if (getPhysObjectAt(pos).isEmpty() && !hasOceanAt(pos)) {
-      actor.setPosition(pos);
+      synchronized (this) {
+        actorPosition = pos;
+      }
       actorObservable.notifyObservers();
     }
+  }
+
+  Position getPositionInDirection() {
+    Position oldPos = getActorPosition();
+    int newX = oldPos.getX();
+    int newY = oldPos.getY();
+    synchronized (this) {
+      switch (actorDirection) {
+        case RIGHT -> {
+          newX++;
+        }
+        case DOWN -> {
+          newY++;
+        }
+        case LEFT -> {
+          newX--;
+        }
+        case UP -> {
+          newY--;
+        }
+      }
+    }
+    return new Position(newX, newY);
+  }
+
+  Position getPositionInDirectionRight() {
+    Position posInDir = getPositionInDirection();
+    Position pos = getActorPosition();
+    Position posInDirRight = new Position();
+    if(posInDir.getX() == pos.getX()) { // Direction is UP or DOWN
+      int offset = pos.getY() - posInDir.getY();
+      posInDirRight.setX(posInDir.getX()+offset);
+      posInDirRight.setY(posInDir.getY());
+    } else if(posInDir.getY() == pos.getY()) { // Direction is LEFT or RIGHT
+      int offset = posInDir.getX() - pos.getX();
+      posInDirRight.setX(posInDir.getX());
+      posInDirRight.setY(posInDir.getY()+offset);
+    }
+    return posInDirRight;
   }
 
   public Observable getSizeObservable() {
@@ -277,6 +421,20 @@ public class Island {
 
   public Observable getActorObservable() {
     return actorObservable;
+  }
+
+  public void deactivateObservableNotifications() {
+    physicalsObservable.deactivateNotification();
+    oceanObservable.deactivateNotification();
+    actorObservable.deactivateNotification();
+    sizeObservable.deactivateNotification();
+  }
+
+  public void activateObservableNotifications() {
+    physicalsObservable.activateNotification();
+    oceanObservable.activateNotification();
+    actorObservable.activateNotification();
+    sizeObservable.activateNotification();
   }
 
   // This method is only for console tester usage and can be removed later.
@@ -301,9 +459,9 @@ public class Island {
           color = ANSI_BLUE;
           symbol = "■";
         }
-        if(actor.getPosition().equals(new Position(x, y))) {
+        if(getActorPosition().equals(new Position(x, y))) {
           color = ANSI_RED;
-          switch (actor.getDirection()) {
+          switch (getActorDirection()) {
             case RIGHT -> symbol = ">";
             case DOWN -> symbol = "v";
             case LEFT -> symbol = "<";
@@ -329,19 +487,4 @@ public class Island {
     return result.toString();
 
   }
-
-  public void deactivateObservableNotifications() {
-    physicalsObservable.deactivateNotification();
-    oceanObservable.deactivateNotification();
-    actorObservable.deactivateNotification();
-    sizeObservable.deactivateNotification();
-  }
-
-  public void activateObservableNotifications() {
-    physicalsObservable.activateNotification();
-    oceanObservable.activateNotification();
-    actorObservable.activateNotification();
-    sizeObservable.activateNotification();
-  }
-
 }
