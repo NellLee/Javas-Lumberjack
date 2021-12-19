@@ -151,6 +151,9 @@ public class Island {
   }
 
   public boolean hasPhysObjectAt(Position position) {
+    if(!posInRange(position)) {
+      return false;
+    }
     synchronized (this) {
       return physObjGrid[position.getX()][position.getY()].getContent().isPresent();
     }

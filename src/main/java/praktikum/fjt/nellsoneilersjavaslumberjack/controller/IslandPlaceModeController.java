@@ -45,7 +45,7 @@ public class IslandPlaceModeController {
       }
     });
     fxmlCtrl.islandRegion.setOnMouseReleased(mouseEvent -> stopDraggingActor());
-    fxmlCtrl.islandRegion.setOnMouseDragged(mouseEvent -> executeDraggingActor(CoordinateConverterUtil.toModelPos(mouseEvent.getX(), mouseEvent.getY())));
+    fxmlCtrl.islandRegion.setOnMouseDragged(mouseEvent -> executeDragging(CoordinateConverterUtil.toModelPos(mouseEvent.getX(), mouseEvent.getY())));
     fxmlCtrl.placeActorBtn.setOnAction(actionEvent -> setCurrentPlaceModeOrReset(PlaceMode.Actor));
     fxmlCtrl.placeActorMenuItem.setOnAction(actionEvent -> setCurrentPlaceModeOrReset(PlaceMode.Actor));
     fxmlCtrl.placeTreeBtn.setOnAction(actionEvent -> setCurrentPlaceModeOrReset(PlaceMode.Tree));
@@ -74,10 +74,14 @@ public class IslandPlaceModeController {
     isDraggingActor = false;
   }
 
-  private void executeDraggingActor(Position dragPosition) {
-    if(isDraggingActor && fxmlCtrl.editIslandCheckBox.isSelected()) {
-      if(island.posOnLand(dragPosition) && !island.hasPhysObjectAt(dragPosition)) {
-        island.setActorPosition(dragPosition);
+  private void executeDragging(Position dragPosition) {
+    if (fxmlCtrl.editIslandCheckBox.isSelected()) {
+      if (isDraggingActor) {
+        if (island.posOnLand(dragPosition) && !island.hasPhysObjectAt(dragPosition)) {
+          island.setActorPosition(dragPosition);
+        }
+      } else if (currentPlaceMode == PlaceMode.Water || currentPlaceMode == PlaceMode.Delete) {
+        executeCurrentPlaceMode(dragPosition);
       }
     }
   }
