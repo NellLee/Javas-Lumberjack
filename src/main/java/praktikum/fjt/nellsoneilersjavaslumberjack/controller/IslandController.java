@@ -9,6 +9,7 @@ public class IslandController {
 
   private IslandPlaceModeController islandPlaceModeController;
   private IslandSizeChangeController islandSizeChangeController;
+  private IslandSaveController islandSaveController;
   private ActorController actorController;
 
 
@@ -27,6 +28,9 @@ public class IslandController {
 
     actorController = new ActorController(fxmlCtrl, island);
     actorController.initialize();
+
+    islandSaveController = new IslandSaveController(fxmlCtrl, island);
+    islandSaveController.initialize();
   }
 
   public void updateActorContextMenu() {

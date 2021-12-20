@@ -1,6 +1,8 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.model.dataTypes;
 
-public enum Direction {
+import java.io.Serializable;
+
+public enum Direction implements Serializable {
   RIGHT,
   DOWN,
   LEFT,

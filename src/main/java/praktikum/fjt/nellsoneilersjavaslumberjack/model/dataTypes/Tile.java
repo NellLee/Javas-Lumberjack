@@ -1,9 +1,10 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.model.dataTypes;
 
+import java.io.Serializable;
 import java.util.Optional;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.physicalObjects.PhysicalObject;
 
-public class Tile {
+public class Tile implements Serializable {
 
   private PhysicalObject content;
 

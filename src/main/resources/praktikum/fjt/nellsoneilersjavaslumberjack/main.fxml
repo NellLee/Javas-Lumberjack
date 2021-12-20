@@ -110,7 +110,7 @@
                   <Menu text="_Speichern">
                      <items>
                         <MenuItem mnemonicParsing="false" text="XML" />
-                        <MenuItem mnemonicParsing="false" text="Serialisiert" />
+                        <MenuItem fx:id="serializeIslandMenuItem" mnemonicParsing="false" text="Serialisiert" />
                      </items>
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -123,7 +123,7 @@
                   <Menu text="_Laden">
                      <items>
                         <MenuItem mnemonicParsing="false" text="XML" />
-                        <MenuItem mnemonicParsing="false" text="Serialisiert" />
+                        <MenuItem fx:id="deserializeIslandMenuItem" mnemonicParsing="false" text="Serialisiert" />
                      </items>
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

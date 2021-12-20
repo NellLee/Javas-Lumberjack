@@ -137,8 +137,7 @@ public class ProgramController {
     fileChooser.setTitle("Vorhandene Programm-Datei öffnen");
     File dir = new File(LumberjackProgram.DIRECTORY);
     fileChooser.setInitialDirectory(dir);
-    ExtensionFilter filter = new ExtensionFilter("Java Dateien", "*.java");
-    fileChooser.getExtensionFilters().add(filter);
+    fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Dateien", "*.java"));
     File file = fileChooser.showOpenDialog(new Stage());
     if(file != null) {
       String fileName = file.getName();

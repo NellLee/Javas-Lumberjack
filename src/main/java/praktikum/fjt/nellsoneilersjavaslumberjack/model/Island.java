@@ -5,6 +5,8 @@ import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_GREE
 import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_RED;
 import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_RESET;
 
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -18,21 +20,21 @@ import praktikum.fjt.nellsoneilersjavaslumberjack.model.physicalObjects.Tree;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.physicalObjects.Wood;
 import praktikum.fjt.nellsoneilersjavaslumberjack.util.Observable;
 
-public class Island {
+public class Island implements Serializable {
   private Tile[][] physObjGrid;
   private boolean[][] oceanGrid;
   private int height;
   private int width;
 
-  private Lumberjack actor;
+  private transient Lumberjack actor;
   private Position actorPosition;
   private Direction actorDirection;
   private boolean actorHasWood = false;
 
-  private final Observable sizeObservable = new Observable();
-  private final Observable oceanObservable = new Observable();
-  private final Observable physicalsObservable = new Observable();
-  private final Observable actorObservable = new Observable();
+  private final transient Observable sizeObservable = new Observable();
+  private final transient Observable oceanObservable = new Observable();
+  private final transient Observable physicalsObservable = new Observable();
+  private final transient Observable actorObservable = new Observable();
 
   public Island(int width, int height) {
     this(width, height, new Position(0, 0), Direction.RIGHT);
@@ -43,6 +45,22 @@ public class Island {
     this.actor = new Lumberjack(this);
     this.actorPosition = actorPosition;
     this.actorDirection = actorDirection;
+  }
+
+  public void replaceBy(Island other) {
+    physObjGrid = other.physObjGrid;
+    oceanGrid = other.oceanGrid;
+    height = other.height;
+    width = other.width;
+
+    actorPosition = other.actorPosition;
+    actorDirection = other.actorDirection;
+    actorHasWood = other.actorHasWood;
+
+    sizeObservable.notifyObservers();
+    oceanObservable.notifyObservers();
+    physicalsObservable.notifyObservers();
+    actorObservable.notifyObservers();
   }
 
   private void createGrids(int width, int height) {

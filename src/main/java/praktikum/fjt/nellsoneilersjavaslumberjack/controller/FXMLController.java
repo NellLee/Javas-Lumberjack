@@ -118,6 +118,10 @@ public class FXMLController {
   Label statusLabel;
   @FXML
   Slider simSpeedSlider;
+  @FXML
+  MenuItem serializeIslandMenuItem;
+  @FXML
+  MenuItem deserializeIslandMenuItem;
 
   IslandRegion islandRegion;
 

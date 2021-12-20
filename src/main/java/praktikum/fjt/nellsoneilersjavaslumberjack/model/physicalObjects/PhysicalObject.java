@@ -1,6 +1,8 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.model.physicalObjects;
 
-public interface PhysicalObject {
+import java.io.Serializable;
+
+public interface PhysicalObject extends Serializable {
 
   int getRotation();
 

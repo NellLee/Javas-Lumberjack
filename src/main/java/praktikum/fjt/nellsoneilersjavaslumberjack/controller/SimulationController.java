@@ -92,29 +92,43 @@ public class SimulationController {
     }
 
     private void enableOnlyStartButton() {
-        fxmlCtrl.startSimButton.setDisable(false);
-        fxmlCtrl.startSimMenuItem.setDisable(false);
-        fxmlCtrl.pauseSimButton.setDisable(true);
-        fxmlCtrl.pauseSimMenuItem.setDisable(true);
-        fxmlCtrl.stopSimButton.setDisable(true);
-        fxmlCtrl.stopSimMenuItem.setDisable(true);
+        runLaterIfNeeded(() -> {
+            fxmlCtrl.startSimButton.setDisable(false);
+            fxmlCtrl.startSimMenuItem.setDisable(false);
+            fxmlCtrl.pauseSimButton.setDisable(true);
+            fxmlCtrl.pauseSimMenuItem.setDisable(true);
+            fxmlCtrl.stopSimButton.setDisable(true);
+            fxmlCtrl.stopSimMenuItem.setDisable(true);
+        });
     }
 
     private void disableOnlyPauseButton() {
-        fxmlCtrl.startSimButton.setDisable(false);
-        fxmlCtrl.startSimMenuItem.setDisable(false);
-        fxmlCtrl.pauseSimButton.setDisable(true);
-        fxmlCtrl.pauseSimMenuItem.setDisable(true);
-        fxmlCtrl.stopSimButton.setDisable(false);
-        fxmlCtrl.stopSimMenuItem.setDisable(false);
+        runLaterIfNeeded(() -> {
+            fxmlCtrl.startSimButton.setDisable(false);
+            fxmlCtrl.startSimMenuItem.setDisable(false);
+            fxmlCtrl.pauseSimButton.setDisable(true);
+            fxmlCtrl.pauseSimMenuItem.setDisable(true);
+            fxmlCtrl.stopSimButton.setDisable(false);
+            fxmlCtrl.stopSimMenuItem.setDisable(false);
+        });
     }
 
     private void disableOnlyStartButton() {
-        fxmlCtrl.startSimButton.setDisable(true);
-        fxmlCtrl.startSimMenuItem.setDisable(true);
-        fxmlCtrl.pauseSimButton.setDisable(false);
-        fxmlCtrl.pauseSimMenuItem.setDisable(false);
-        fxmlCtrl.stopSimButton.setDisable(false);
-        fxmlCtrl.stopSimMenuItem.setDisable(false);
+        runLaterIfNeeded(() -> {
+            fxmlCtrl.startSimButton.setDisable(true);
+            fxmlCtrl.startSimMenuItem.setDisable(true);
+            fxmlCtrl.pauseSimButton.setDisable(false);
+            fxmlCtrl.pauseSimMenuItem.setDisable(false);
+            fxmlCtrl.stopSimButton.setDisable(false);
+            fxmlCtrl.stopSimMenuItem.setDisable(false);
+        });
+    }
+
+    private void runLaterIfNeeded(Runnable runnable) {
+        if(Platform.isFxApplicationThread())  {
+            runnable.run();
+        } else {
+            Platform.runLater(runnable);
+        }
     }
 }
