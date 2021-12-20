@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LumberjackProgram {
 
-  private String name;
+  private final String name;
 
   public static final String DIRECTORY = "programs";
   public static final String PROGRAM_TEMPLATE = """
@@ -60,10 +60,6 @@ public void kehrt() {
 
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getFileName() {

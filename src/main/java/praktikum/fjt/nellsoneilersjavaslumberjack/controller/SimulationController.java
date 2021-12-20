@@ -5,12 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import praktikum.fjt.nellsoneilersjavaslumberjack.Simulation;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.Island;
-import praktikum.fjt.nellsoneilersjavaslumberjack.util.Observer;
 
 public class SimulationController {
 
-    private FXMLController fxmlCtrl;
-    private Island island;
+    private final FXMLController fxmlCtrl;
+    private final Island island;
     private Simulation sim;
     private volatile int simSpeed;
 
@@ -28,9 +27,7 @@ public class SimulationController {
 
     private void initializeSimSpeedSliderHandling() {
         setSimSpeed((int) fxmlCtrl.simSpeedSlider.getValue());
-        fxmlCtrl.simSpeedSlider.valueProperty().addListener((observable, oldVal, newVal) -> {
-            setSimSpeed(newVal.intValue());
-        });
+        fxmlCtrl.simSpeedSlider.valueProperty().addListener((observable, oldVal, newVal) -> setSimSpeed(newVal.intValue()));
     }
 
     private void initializeSimBtnEventHandling() {

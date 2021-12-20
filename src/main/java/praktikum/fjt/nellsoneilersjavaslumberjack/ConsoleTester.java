@@ -69,8 +69,7 @@ public class ConsoleTester {
             ANSI_GREEN + (actor.vorneHolz() ? "Vorne Holz" : "Vorne KEIN Holz") + ANSI_RESET);
         case "th", "traegtHolz", "traegtHolz()" -> System.out.println(
             ANSI_GREEN + (actor.traegtHolz() ? "Trägt Holz" : "Trägt KEIN Holz") + ANSI_RESET);
-        case "q", "quit", "e", "exit" -> { System.exit(0);
-        }
+        case "q", "quit", "e", "exit" -> System.exit(0);
         case "" -> {}
         default -> throw new IllegalStateException("Invalid command: " + input);
       }

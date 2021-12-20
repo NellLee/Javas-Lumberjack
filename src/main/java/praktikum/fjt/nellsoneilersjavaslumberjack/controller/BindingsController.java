@@ -1,7 +1,5 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import praktikum.fjt.nellsoneilersjavaslumberjack.view.IslandRegion;
 
 public class BindingsController {

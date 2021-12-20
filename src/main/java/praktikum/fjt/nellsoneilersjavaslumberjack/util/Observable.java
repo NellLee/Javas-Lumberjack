@@ -8,7 +8,7 @@ public class Observable {
   private boolean notification;
 
   public Observable() {
-    observers = new CopyOnWriteArrayList<Observer>();
+    observers = new CopyOnWriteArrayList<>();
     notification = true;
   }
 

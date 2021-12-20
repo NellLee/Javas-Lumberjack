@@ -1,7 +1,6 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import praktikum.fjt.nellsoneilersjavaslumberjack.controller.ProgramController;

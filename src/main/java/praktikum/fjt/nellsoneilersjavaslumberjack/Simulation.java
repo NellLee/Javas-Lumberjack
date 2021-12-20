@@ -11,9 +11,9 @@ import praktikum.fjt.nellsoneilersjavaslumberjack.view.AlertFactory;
 
 public class Simulation extends Thread {
 
-  private SimulationController simulationController;
-  private Observer simObserver;
-  private Island island;
+  private final SimulationController simulationController;
+  private final Observer simObserver;
+  private final Island island;
 
   private volatile boolean pause;
   private volatile boolean stop;

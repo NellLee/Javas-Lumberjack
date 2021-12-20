@@ -165,10 +165,10 @@ public class IslandRegion extends Region {
       for (int x = 0; x < island.getWidth(); x++) {
         double canvasX  = CoordinateConverterUtil.toViewCoord(x);
 
-        double x1 = 0d;
-        double x2 = 0d;
-        double y1 = 0d;
-        double y2 = 0d;
+        double x1;
+        double x2;
+        double y1;
+        double y2;
 
         if(!island.hasOceanAt(new Position(x, y))) {
           if(island.posInRange(new Position(x-1, y)) && island.hasOceanAt(new Position(x-1, y))) {

@@ -131,5 +131,6 @@ public class Lumberjack {
   }
 
   public void main() {
+    // Will be overridden by the user's lumberjack program
   }
 }

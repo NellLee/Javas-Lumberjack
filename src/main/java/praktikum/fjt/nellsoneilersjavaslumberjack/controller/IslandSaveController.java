@@ -2,13 +2,10 @@ package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -16,8 +13,8 @@ import praktikum.fjt.nellsoneilersjavaslumberjack.model.Island;
 
 public class IslandSaveController {
 
-  private FXMLController fxmlCtrl;
-  private Island island;
+  private final FXMLController fxmlCtrl;
+  private final Island island;
 
   public IslandSaveController(FXMLController fxmlCtrl, Island island) {
     this.fxmlCtrl = fxmlCtrl;
@@ -38,7 +35,7 @@ public class IslandSaveController {
       File file = fileChooser.showSaveDialog(new Stage());
       try (
         FileOutputStream fileOut = new FileOutputStream(file);
-        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)
       ) {
         objectOut.writeObject(island);
       } catch (IOException e) {
@@ -53,7 +50,7 @@ public class IslandSaveController {
       File file = fileChooser.showOpenDialog(new Stage());
       try (
         FileInputStream fileIn = new FileInputStream(file);
-        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn)
       ){
         island.replaceBy((Island) objectIn.readObject());
       } catch (IOException | ClassNotFoundException e) {

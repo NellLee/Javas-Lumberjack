@@ -5,7 +5,6 @@ import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_GREE
 import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_RED;
 import static praktikum.fjt.nellsoneilersjavaslumberjack.ConsoleTester.ANSI_RESET;
 
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
@@ -395,18 +394,10 @@ public class Island implements Serializable {
     int newY = oldPos.getY();
     synchronized (this) {
       switch (actorDirection) {
-        case RIGHT -> {
-          newX++;
-        }
-        case DOWN -> {
-          newY++;
-        }
-        case LEFT -> {
-          newX--;
-        }
-        case UP -> {
-          newY--;
-        }
+        case RIGHT -> newX++;
+        case DOWN -> newY++;
+        case LEFT -> newX--;
+        case UP -> newY--;
       }
     }
     return new Position(newX, newY);
@@ -465,9 +456,7 @@ public class Island implements Serializable {
     String[] colIndices = IntStream.range(0, getWidth())
         .mapToObj(String::valueOf)
         .toArray(String[]::new);
-    Arrays.stream(colIndices).forEach(colIndex -> {
-      result.append(colIndex).append(" ");
-    });
+    Arrays.stream(colIndices).forEach(colIndex -> result.append(colIndex).append(" "));
     result.append("\n");
 
 

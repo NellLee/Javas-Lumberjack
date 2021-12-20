@@ -1,5 +1,6 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.view;
 
+import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import praktikum.fjt.nellsoneilersjavaslumberjack.Main;
@@ -19,8 +20,12 @@ public final class ViewConstants {
   public static final int CANVAS_BORDER_SIZE = 1 * CELL_SIZE;
 
 
-  public static final Image STUMP_TEXTURE = new Image(Main.class.getResource("images/Stump.png").toString());
-  public static final Image TREE_TEXTURE = new Image(Main.class.getResource("images/Tree.png").toString());
-  public static final Image WOOD_TEXTURE = new Image(Main.class.getResource("images/Wood.png").toString());
-  public static final Image ACTOR_TEXTURE = new Image(Main.class.getResource("images/Lumberjack.png").toString());
+  public static final Image STUMP_TEXTURE = new Image(
+      Objects.requireNonNull(Main.class.getResource("images/Stump.png")).toString());
+  public static final Image TREE_TEXTURE = new Image(
+      Objects.requireNonNull(Main.class.getResource("images/Tree.png")).toString());
+  public static final Image WOOD_TEXTURE = new Image(
+      Objects.requireNonNull(Main.class.getResource("images/Wood.png")).toString());
+  public static final Image ACTOR_TEXTURE = new Image(
+      Objects.requireNonNull(Main.class.getResource("images/Lumberjack.png")).toString());
 }

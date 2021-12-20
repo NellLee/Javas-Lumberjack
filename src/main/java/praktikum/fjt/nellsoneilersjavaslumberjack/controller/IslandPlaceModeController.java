@@ -88,21 +88,11 @@ public class IslandPlaceModeController {
 
   private void executeCurrentPlaceMode(Position clickPosition) {
     switch(currentPlaceMode) {
-      case Actor -> {
-        island.setActorPosition(clickPosition);
-      }
-      case Tree -> {
-        island.setPhysObjectAt(clickPosition, new Tree(), false);
-      }
-      case Wood -> {
-        island.setWoodAt(clickPosition);
-      }
-      case Stump -> {
-        island.setPhysObjectAt(clickPosition, new Stump(), false);
-      }
-      case Water -> {
-        island.setOceanAt(clickPosition);
-      }
+      case Actor -> island.setActorPosition(clickPosition);
+      case Tree -> island.setPhysObjectAt(clickPosition, new Tree(), false);
+      case Wood -> island.setWoodAt(clickPosition);
+      case Stump -> island.setPhysObjectAt(clickPosition, new Stump(), false);
+      case Water -> island.setOceanAt(clickPosition);
       case Delete -> {
         island.deletePhysObjectAt(clickPosition);
         island.setOceanAt(clickPosition, false);
