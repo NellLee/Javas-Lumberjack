@@ -45,7 +45,7 @@ public class FXMLController {
   @FXML
   ToolBar editIslandToolBar;
   @FXML
-  Menu editIslandMenu;
+  Menu placeObjectMenu;
   @FXML
   Button newProgramBtn;
   @FXML

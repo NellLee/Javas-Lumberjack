@@ -31,7 +31,8 @@ public class BindingsController {
     // Link the activation status of the toolbar and menu to the corresponding checkbox
     fxmlCtrl.editIslandToolBar.disableProperty().bind(
         fxmlCtrl.editIslandCheckBox.selectedProperty().not());
-    fxmlCtrl.editIslandMenu.disableProperty().bind(fxmlCtrl.editIslandCheckBox.selectedProperty().not());
+    fxmlCtrl.placeObjectMenu.disableProperty().bind(fxmlCtrl.editIslandCheckBox.selectedProperty().not());
+    fxmlCtrl.deleteObjectMenuItem.disableProperty().bind(fxmlCtrl.editIslandCheckBox.selectedProperty().not());
 
   }
 }

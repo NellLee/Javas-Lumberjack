@@ -105,7 +105,7 @@
                   </MenuItem>
             </items>
           </Menu>
-          <Menu fx:id="editIslandMenu" text="_Landschaft">
+          <Menu text="_Landschaft">
             <items>
                   <Menu text="_Speichern">
                      <items>
@@ -148,7 +148,7 @@
                      </graphic>
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <Menu text="Objekt _platzieren">
+                  <Menu fx:id="placeObjectMenu" text="Objekt _platzieren">
                      <items>
                         <RadioMenuItem fx:id="placeActorMenuItem" mnemonicParsing="false" text="Holzfäller">
                            <graphic>
