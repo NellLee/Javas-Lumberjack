@@ -168,4 +168,8 @@ public class FXMLController {
   public void updateActorContextMenu() {
     islandController.updateActorContextMenu();
   }
+
+  public void setStatusLabelMessage(String message) {
+    statusLabel.setText(message);
+  }
 }

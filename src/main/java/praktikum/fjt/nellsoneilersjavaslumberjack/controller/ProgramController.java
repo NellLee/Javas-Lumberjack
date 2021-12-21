@@ -80,7 +80,7 @@ public class ProgramController {
 
       if(success) {
         loadProgram(program, fxmlCtrl);
-        AlertFactory.createInfo("Kompilieren erfolgreich!");
+        fxmlCtrl.setStatusLabelMessage("Kompilieren erfolgreich!");
       } else {
         AlertFactory.createError(errorStream.toString());
       }
@@ -95,9 +95,9 @@ public class ProgramController {
 
     if(success) {
       loadProgram(program, fxmlCtrl);
-      fxmlCtrl.statusLabel.setText(program.getFileName() + " erfolgreich geladen.");
+      fxmlCtrl.setStatusLabelMessage(program.getFileName() + " erfolgreich geladen.");
     } else {
-      fxmlCtrl.statusLabel.setText("Fehler bei initialer Kompilation von " + program.getFileName() + ". (Standard-Akteur wird stattdessen genutzt)");
+      AlertFactory.createError("Fehler bei initialer Kompilation von " + program.getFileName() + ". Standard-Akteur wird stattdessen genutzt.");
     }
   }
 

@@ -32,7 +32,7 @@ public class EditorController {
         boolean success = job.printPage(fxmlCtrl.programEditor);
         if (success) {
           job.endJob();
-          AlertFactory.createInfo("Editor erfolgreich gedruckt!");
+          fxmlCtrl.setStatusLabelMessage("Editor erfolgreich gedruckt!");
         } else {
           AlertFactory.createError("Drucken des Editors fehlgeschlagen!");
         }

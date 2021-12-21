@@ -35,14 +35,12 @@ public class IslandSaveController {
 
     initializeSerializationBtnEventHandling();
     initializePrintIslandBtnEventHandling();
+    initializeSaveIslandImageBtnEventHandling();
+  }
 
-    fxmlCtrl.saveIslandPNGMenuItem.setOnAction(actionEvent -> {
-      saveIslandRegionAsImage("png");
-    });
-
-    fxmlCtrl.saveIslandGIFMenuItem.setOnAction(actionEvent -> {
-      saveIslandRegionAsImage("gif");
-    });
+  private void initializeSaveIslandImageBtnEventHandling() {
+    fxmlCtrl.saveIslandPNGMenuItem.setOnAction(actionEvent -> saveIslandRegionAsImage("png"));
+    fxmlCtrl.saveIslandGIFMenuItem.setOnAction(actionEvent -> saveIslandRegionAsImage("gif"));
   }
 
   private void saveIslandRegionAsImage(String fileExtension) {
@@ -60,7 +58,7 @@ public class IslandSaveController {
     RenderedImage renderedImage = SwingFXUtils.fromFXImage(islandImage, null);
     try {
       ImageIO.write(renderedImage, fileExtension, file);
-      AlertFactory.createInfo("Bild '" + file.getName() + "' erfolgreich gespeichert!");
+      fxmlCtrl.setStatusLabelMessage("Bild '" + file.getName() + "' erfolgreich gespeichert!");
     } catch (IOException e) {
       AlertFactory.createError("Speichern des Bildes fehlgeschlagen: " + e.getMessage());
     }
@@ -73,7 +71,7 @@ public class IslandSaveController {
         boolean success = job.printPage(fxmlCtrl.islandRegion);
         if (success) {
           job.endJob();
-          AlertFactory.createInfo("Insel erfolgreich gedruckt!");
+          fxmlCtrl.setStatusLabelMessage("Insel erfolgreich gedruckt!");
         } else {
           AlertFactory.createError("Drucken der Insel fehlgeschlagen!");
         }
