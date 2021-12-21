@@ -122,6 +122,14 @@ public class FXMLController {
   MenuItem serializeIslandMenuItem;
   @FXML
   MenuItem deserializeIslandMenuItem;
+  @FXML
+  MenuItem printEditorMenuItem;
+  @FXML
+  MenuItem printIslandMenuItem;
+  @FXML
+  MenuItem saveIslandPNGMenuItem;
+  @FXML
+  MenuItem saveIslandGIFMenuItem;
 
   IslandRegion islandRegion;
 

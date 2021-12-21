@@ -78,7 +78,7 @@
                         <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem text="_Drucken">
+                  <MenuItem fx:id="printEditorMenuItem" text="_Drucken">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -135,9 +135,8 @@
                   </Menu>
                   <Menu text="_Bild Speichern">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="PNG" />
-                        <MenuItem mnemonicParsing="false" text="PDF" />
-                        <MenuItem mnemonicParsing="false" text="[...]" />
+                        <MenuItem fx:id="saveIslandPNGMenuItem" mnemonicParsing="false" text="PNG" />
+                        <MenuItem fx:id="saveIslandGIFMenuItem" mnemonicParsing="false" text="GIF" />
                      </items>
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -147,6 +146,15 @@
                         </ImageView>
                      </graphic>
                   </Menu>
+                  <MenuItem fx:id="printIslandMenuItem" text="_Drucken">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/Print16.gif" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu fx:id="placeObjectMenu" text="Objekt _platzieren">
                      <items>

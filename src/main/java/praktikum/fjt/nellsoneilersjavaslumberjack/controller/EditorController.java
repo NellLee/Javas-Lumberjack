@@ -1,7 +1,11 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.print.PrinterJob;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.LumberjackProgram;
 import praktikum.fjt.nellsoneilersjavaslumberjack.view.AlertFactory;
 
@@ -16,7 +20,24 @@ public class EditorController {
   public void initialize() {
     initializeNewProgramDialog();
     initializeProgramBtnEventHandling();
+    initializePrintBtnEventHandling();
+
     fxmlCtrl.programEditor.requestFocus();
+  }
+
+  private void initializePrintBtnEventHandling() {
+    fxmlCtrl.printEditorMenuItem.setOnAction(actionEvent -> {
+      PrinterJob job = PrinterJob.createPrinterJob();
+      if (job != null && job.showPrintDialog(fxmlCtrl.stage)){
+        boolean success = job.printPage(fxmlCtrl.programEditor);
+        if (success) {
+          job.endJob();
+          AlertFactory.createInfo("Editor erfolgreich gedruckt!");
+        } else {
+          AlertFactory.createError("Drucken des Editors fehlgeschlagen!");
+        }
+      }
+    });
   }
 
   private void initializeProgramBtnEventHandling() {
