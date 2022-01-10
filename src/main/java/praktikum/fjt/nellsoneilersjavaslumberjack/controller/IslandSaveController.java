@@ -7,15 +7,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Locale;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.print.PrinterJob;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.Island;
 import praktikum.fjt.nellsoneilersjavaslumberjack.view.AlertFactory;
@@ -34,11 +30,11 @@ public class IslandSaveController {
   public void initialize() {
 
     initializeSerializationBtnEventHandling();
-    initializePrintIslandBtnEventHandling();
-    initializeSaveIslandImageBtnEventHandling();
+    initializePrintBtnEventHandling();
+    initializeSaveImageBtnEventHandling();
   }
 
-  private void initializeSaveIslandImageBtnEventHandling() {
+  private void initializeSaveImageBtnEventHandling() {
     fxmlCtrl.saveIslandPNGMenuItem.setOnAction(actionEvent -> saveIslandRegionAsImage("png"));
     fxmlCtrl.saveIslandGIFMenuItem.setOnAction(actionEvent -> saveIslandRegionAsImage("gif"));
   }
@@ -47,7 +43,7 @@ public class IslandSaveController {
     fileExtension = fileExtension.toLowerCase();
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Bild speichern unter...");
-    fileChooser.getExtensionFilters().add(new ExtensionFilter(fileExtension.toUpperCase() + " image files", "*." + fileExtension));
+    fileChooser.getExtensionFilters().add(new ExtensionFilter(fileExtension.toUpperCase() + " Bild Dateien", "*." + fileExtension));
     File file = fileChooser.showSaveDialog(fxmlCtrl.stage);
     if(file == null) {
       return;
@@ -64,7 +60,7 @@ public class IslandSaveController {
     }
   }
 
-  private void initializePrintIslandBtnEventHandling() {
+  private void initializePrintBtnEventHandling() {
     fxmlCtrl.printIslandMenuItem.setOnAction(actionEvent -> {
       PrinterJob job = PrinterJob.createPrinterJob();
       if (job != null && job.showPrintDialog(fxmlCtrl.stage)){
