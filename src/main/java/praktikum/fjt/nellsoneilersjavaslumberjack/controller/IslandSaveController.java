@@ -79,30 +79,36 @@ public class IslandSaveController {
     fxmlCtrl.serializeIslandMenuItem.setOnAction(actionEvent -> {
       FileChooser fileChooser = new FileChooser();
       fileChooser.setTitle("Insel speichern unter...");
+      fileChooser.setInitialDirectory(new File("islands"));
       fileChooser.getExtensionFilters().add(new ExtensionFilter("JavasLumberjack Insel Dateien", "*.island"));
       File file = fileChooser.showSaveDialog(fxmlCtrl.stage);
-      try (
-        FileOutputStream fileOut = new FileOutputStream(file);
-        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)
-      ) {
-        objectOut.writeObject(island);
-      } catch (IOException e) {
-        e.printStackTrace();
+      if(file != null) {
+        try (
+            FileOutputStream fileOut = new FileOutputStream(file);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)
+        ) {
+          objectOut.writeObject(island);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     });
 
     fxmlCtrl.deserializeIslandMenuItem.setOnAction(actionEvent -> {
       FileChooser fileChooser = new FileChooser();
       fileChooser.setTitle("Insel öffnen...");
+      fileChooser.setInitialDirectory(new File("islands"));
       fileChooser.getExtensionFilters().add(new ExtensionFilter("JavasLumberjack Insel Dateien", "*.island"));
       File file = fileChooser.showOpenDialog(fxmlCtrl.stage);
-      try (
-        FileInputStream fileIn = new FileInputStream(file);
-        ObjectInputStream objectIn = new ObjectInputStream(fileIn)
-      ){
-        island.replaceBy((Island) objectIn.readObject());
-      } catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
+      if(file != null) {
+        try (
+            FileInputStream fileIn = new FileInputStream(file);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn)
+        ) {
+          island.replaceBy((Island) objectIn.readObject());
+        } catch (IOException | ClassNotFoundException e) {
+          e.printStackTrace();
+        }
       }
     });
   }
