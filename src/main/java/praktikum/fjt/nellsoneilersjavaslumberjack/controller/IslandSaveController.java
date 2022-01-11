@@ -87,7 +87,9 @@ public class IslandSaveController {
             FileOutputStream fileOut = new FileOutputStream(file);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)
         ) {
-          objectOut.writeObject(island);
+          synchronized (island) {
+            objectOut.writeObject(island);
+          }
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -105,7 +107,9 @@ public class IslandSaveController {
             FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn)
         ) {
-          island.replaceBy((Island) objectIn.readObject());
+          synchronized (island) {
+            island.replaceBy((Island) objectIn.readObject());
+          }
         } catch (IOException | ClassNotFoundException e) {
           e.printStackTrace();
         }
