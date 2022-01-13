@@ -10,6 +10,8 @@ public class IslandSizeChangeController {
 
   private final Island island;
 
+  private boolean refreshing;
+
   public IslandSizeChangeController(
       FXMLController fxmlCtrl, Island island) {
     this.fxmlCtrl = fxmlCtrl;
@@ -25,13 +27,19 @@ public class IslandSizeChangeController {
 
     // Configure size changing event handling
     fxmlCtrl.islandWidthSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-      if(newValue != null && newValue > 0) setIslandWidth(newValue);
+      if(!refreshing && newValue != null && newValue > 0) setIslandWidth(newValue);
     });
     fxmlCtrl.islandHeightSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-      if(newValue != null && newValue > 0) setIslandHeight(newValue);
+      if(!refreshing && newValue != null && newValue > 0) setIslandHeight(newValue);
     });
   }
 
+  public void refreshSpinners() {
+    refreshing = true;
+    fxmlCtrl.islandWidthSpinner.getValueFactory().setValue(island.getWidth());
+    fxmlCtrl.islandHeightSpinner.getValueFactory().setValue(island.getHeight());
+    refreshing = false;
+  }
 
   private void addIntegerValidationListener(Spinner<Integer> spinner) {
     TextField editor = spinner.getEditor();

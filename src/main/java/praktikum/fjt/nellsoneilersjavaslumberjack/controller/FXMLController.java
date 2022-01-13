@@ -173,6 +173,10 @@ public class FXMLController {
     islandController.updateActorContextMenu();
   }
 
+  public void refreshIslandSizeSpinners() {
+    islandController.refreshIslandSizeSpinners();
+  }
+
   public void setStatusLabelMessage(String message) {
     statusLabel.setText(message);
   }

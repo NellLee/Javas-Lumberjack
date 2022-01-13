@@ -128,6 +128,7 @@ public class IslandSaveController {
           synchronized (island) {
             island.replaceBy((Island) objectIn.readObject());
           }
+          fxmlCtrl.refreshIslandSizeSpinners();
         } catch (IOException | ClassNotFoundException e) {
           e.printStackTrace();
         }
@@ -158,6 +159,8 @@ public class IslandSaveController {
       if(file != null) {
         if (!loadXMLToIsland(island, file)) {
           AlertFactory.createError("Could not load XML.");
+        } else {
+          fxmlCtrl.refreshIslandSizeSpinners();
         }
       }
     });
@@ -174,9 +177,6 @@ public class IslandSaveController {
         XMLEvent curEvent = xmlReader.nextEvent();
         switch (curEvent.getEventType()) {
           case XMLStreamConstants.START_DOCUMENT:
-            break;
-          case XMLStreamConstants.END_DOCUMENT:
-            xmlReader.close();
             break;
           case XMLStreamConstants.START_ELEMENT:
             StartElement element = curEvent.asStartElement();
@@ -250,6 +250,9 @@ public class IslandSaveController {
               default:
                 break;
             }
+            break;
+          case XMLStreamConstants.END_DOCUMENT:
+            xmlReader.close();
             break;
           default:
             break;

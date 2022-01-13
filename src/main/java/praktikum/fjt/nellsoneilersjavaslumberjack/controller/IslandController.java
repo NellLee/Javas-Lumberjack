@@ -36,4 +36,8 @@ public class IslandController {
   public void updateActorContextMenu() {
     actorController.updateActorContextMenu();
   }
+
+  public void refreshIslandSizeSpinners() {
+    islandSizeChangeController.refreshSpinners();
+  }
 }
