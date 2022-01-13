@@ -130,6 +130,10 @@ public class FXMLController {
   MenuItem saveIslandPNGMenuItem;
   @FXML
   MenuItem saveIslandGIFMenuItem;
+  @FXML
+  MenuItem saveXMLIslandMenuItem;
+  @FXML
+  MenuItem loadXMLIslandMenuItem;
 
   IslandRegion islandRegion;
 

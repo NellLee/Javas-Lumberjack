@@ -366,7 +366,7 @@ public class Island implements Serializable {
     setActorDirection(Direction.values()[Math.floorMod((directionInt), Direction.values().length)]);
   }
 
-  void setActorDirection(Direction actorDirection) {
+  public void setActorDirection(Direction actorDirection) {
     synchronized (this) {
       this.actorDirection = actorDirection;
     }

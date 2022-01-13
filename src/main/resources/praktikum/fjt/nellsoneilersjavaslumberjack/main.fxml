@@ -109,7 +109,7 @@
             <items>
                   <Menu text="_Speichern">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="XML" />
+                        <MenuItem fx:id="saveXMLIslandMenuItem" mnemonicParsing="false" text="XML" />
                         <MenuItem fx:id="serializeIslandMenuItem" mnemonicParsing="false" text="Serialisiert" />
                      </items>
                      <graphic>
@@ -122,7 +122,7 @@
                   </Menu>
                   <Menu text="_Laden">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="XML" />
+                        <MenuItem fx:id="loadXMLIslandMenuItem" mnemonicParsing="false" text="XML" />
                         <MenuItem fx:id="deserializeIslandMenuItem" mnemonicParsing="false" text="Serialisiert" />
                      </items>
                      <graphic>
