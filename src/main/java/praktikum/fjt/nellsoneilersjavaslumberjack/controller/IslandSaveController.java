@@ -283,42 +283,7 @@ public class IslandSaveController {
 
       xmlWriter.writeStartDocument("utf-8", "1.0");
       xmlWriter.writeCharacters("\n\n");
-      xmlWriter.writeDTD("""
-<!DOCTYPE island [
-  <!ELEMENT island ((tree | stump | wood | ocean)*, actor)>
-  <!ATTLIST island
-    width CDATA #REQUIRED
-    height CDATA #REQUIRED
-  >
-  <!ELEMENT tree EMPTY>
-  <!ATTLIST tree
-    x CDATA #REQUIRED
-    y CDATA #REQUIRED
-  >
-  <!ELEMENT stump EMPTY>
-  <!ATTLIST stump
-    x CDATA #REQUIRED
-    y CDATA #REQUIRED
-    woodOnTop CDATA #REQUIRED
-  >
-  <!ELEMENT wood EMPTY>
-  <!ATTLIST wood
-    x CDATA #REQUIRED
-    y CDATA #REQUIRED
-  >
-  <!ELEMENT ocean EMPTY>
-  <!ATTLIST ocean
-    x CDATA #REQUIRED
-    y CDATA #REQUIRED
-  >
-  <!ELEMENT actor EMPTY>
-  <!ATTLIST actor
-    x CDATA #REQUIRED
-    y CDATA #REQUIRED
-    dir CDATA #REQUIRED
-  >
-]>
-        """);
+      xmlWriter.writeDTD(getDtd());
         xmlWriter.writeCharacters("\n\n");
 
         synchronized (island) {
@@ -380,5 +345,44 @@ public class IslandSaveController {
       }
     }
     return false;
+  }
+
+  private String getDtd() {
+    return """
+<!DOCTYPE island [
+<!ELEMENT island ((tree | stump | wood | ocean)*, actor)>
+<!ATTLIST island
+  width CDATA #REQUIRED
+  height CDATA #REQUIRED
+>
+<!ELEMENT tree EMPTY>
+<!ATTLIST tree
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+>
+<!ELEMENT stump EMPTY>
+<!ATTLIST stump
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+  woodOnTop CDATA #REQUIRED
+>
+<!ELEMENT wood EMPTY>
+<!ATTLIST wood
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+>
+<!ELEMENT ocean EMPTY>
+<!ATTLIST ocean
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+>
+<!ELEMENT actor EMPTY>
+<!ATTLIST actor
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+  dir CDATA #REQUIRED
+>
+]>
+      """;
   }
 }
