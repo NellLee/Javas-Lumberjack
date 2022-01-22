@@ -134,10 +134,20 @@ public class FXMLController {
   MenuItem saveXMLIslandMenuItem;
   @FXML
   MenuItem loadXMLIslandMenuItem;
+  @FXML
+  MenuItem loadExampleMenuItem;
+  @FXML
+  MenuItem saveExampleMenuItem;
 
   IslandRegion islandRegion;
 
   TextInputDialog newProgramDialog;
+
+  TextInputDialog loadExampleSettingByTagsDialog;
+
+  TextInputDialog saveExampleSettingWithTagsDialog;
+
+  ChoiceDialog<String> loadExampleSettingByNameIdPairDialog;
 
   Island island;
 
@@ -146,10 +156,13 @@ public class FXMLController {
   private BindingsController bindingsController;
   private EditorController editorController;
   private SimulationController simulationController;
+  private ExampleSettingSaveController exampleSettingSaveController;
 
 
   @FXML
   public void initialize() {
+    DatabaseController.getInstance().checkStatus();
+
     island = IslandGenerator.createExampleIsland();
     islandRegion = new IslandRegion(island);
     islandScrollPane.setContent(islandRegion);
@@ -166,7 +179,8 @@ public class FXMLController {
     simulationController = new SimulationController(this, island);
     simulationController.initialize();
 
-
+    exampleSettingSaveController = new ExampleSettingSaveController(this);
+    exampleSettingSaveController.initialize();
   }
 
   public void updateActorContextMenu() {
@@ -179,5 +193,13 @@ public class FXMLController {
 
   public void setStatusLabelMessage(String message) {
     statusLabel.setText(message);
+  }
+
+  public String getIslandXMLString() {
+    return islandController.getIslandXMLString();
+  }
+
+  public boolean setIslandFromXMLString(String xmlString) {
+    return islandController.setIslandFromXMLString(xmlString);
   }
 }

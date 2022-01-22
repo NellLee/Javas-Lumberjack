@@ -1,13 +1,18 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.print.PrinterJob;
@@ -144,8 +149,12 @@ public class IslandSaveController {
       fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Dateien", "*.xml"));
       File file = fileChooser.showSaveDialog(fxmlCtrl.stage);
       if(file != null) {
-        if (!saveIslandToXML(island, file)) {
-          AlertFactory.createError("Could not save XML.");
+        try {
+          if (!saveIslandXMLToStream(island, new FileOutputStream(file))) {
+            AlertFactory.createError("Could not save XML.");
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
         }
       }
     });
@@ -157,20 +166,24 @@ public class IslandSaveController {
       fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Dateien", "*.xml"));
       File file = fileChooser.showOpenDialog(fxmlCtrl.stage);
       if(file != null) {
-        if (!loadXMLToIsland(island, file)) {
-          AlertFactory.createError("Could not load XML.");
-        } else {
-          fxmlCtrl.refreshIslandSizeSpinners();
+        try {
+          if (!loadXMLStreamToIsland(island, new FileInputStream(file))) {
+            AlertFactory.createError("Could not load XML.");
+          } else {
+            fxmlCtrl.refreshIslandSizeSpinners();
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
         }
       }
     });
   }
 
-  private boolean loadXMLToIsland(Island island, File file) {
+  private boolean loadXMLStreamToIsland(Island island, InputStream stream) {
     Island newIsland = new Island(1, 1);
 
     XMLEventReader xmlReader = null;
-    try (FileInputStream stream = new FileInputStream(file)) {
+    try {
       xmlReader = XMLInputFactory.newInstance().createXMLEventReader(stream);
 
       while(xmlReader.hasNext()) {
@@ -262,7 +275,7 @@ public class IslandSaveController {
       island.replaceBy(newIsland);
       return true;
 
-    } catch (XMLStreamException | IOException e) {
+    } catch (XMLStreamException e) {
       e.printStackTrace();
     } finally {
       if(xmlReader != null) {
@@ -276,9 +289,9 @@ public class IslandSaveController {
     return false;
   }
 
-  private boolean saveIslandToXML(Island island, File file) {
+  public boolean saveIslandXMLToStream(Island island, OutputStream stream) {
     XMLStreamWriter xmlWriter = null;
-    try (FileOutputStream stream = new FileOutputStream(file)) {
+    try {
       xmlWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(stream);
 
       xmlWriter.writeStartDocument("utf-8", "1.0");
@@ -333,7 +346,7 @@ public class IslandSaveController {
           xmlWriter.writeEndDocument();
         }
       return true;
-    } catch (XMLStreamException | IOException e) {
+    } catch (XMLStreamException e) {
       e.printStackTrace();
     } finally {
       if(xmlWriter != null) {
@@ -345,6 +358,18 @@ public class IslandSaveController {
       }
     }
     return false;
+  }
+
+
+  public String getIslandXMLString() {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    saveIslandXMLToStream(island, outputStream);
+    return outputStream.toString(StandardCharsets.UTF_8);
+  }
+
+  public boolean setIslandFromXMLString(String xmlString) {
+    ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8));
+    return loadXMLStreamToIsland(island, inputStream);
   }
 
   private String getDtd() {

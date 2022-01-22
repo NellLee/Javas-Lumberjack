@@ -295,6 +295,12 @@
                   </MenuItem>
                </items>
             </Menu>
+            <Menu text="_Beispiele">
+               <items>
+                  <MenuItem fx:id="loadExampleMenuItem" text="_Laden" />
+                  <MenuItem fx:id="saveExampleMenuItem" text="_Speichern" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <ToolBar>

@@ -1,3 +1,5 @@
 # Project exclude paths
 /programs/
+/javasLumberjackDatabase/
+/islands/
 /target/

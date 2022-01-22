@@ -36,6 +36,13 @@
       <version>11.1.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.15.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
 
 
     <dependency>
@@ -49,6 +56,12 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.11.1.1</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

@@ -47,14 +47,16 @@ public class Island implements Serializable {
   }
 
   public void replaceBy(Island other) {
-    physObjGrid = other.physObjGrid;
-    oceanGrid = other.oceanGrid;
-    height = other.height;
-    width = other.width;
+    synchronized (this) {
+      physObjGrid = other.physObjGrid;
+      oceanGrid = other.oceanGrid;
+      height = other.height;
+      width = other.width;
 
-    actorPosition = other.actorPosition;
-    actorDirection = other.actorDirection;
-    actorHasWood = other.actorHasWood;
+      actorPosition = other.actorPosition;
+      actorDirection = other.actorDirection;
+      actorHasWood = other.actorHasWood;
+    }
 
     sizeObservable.notifyObservers();
     oceanObservable.notifyObservers();

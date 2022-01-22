@@ -1,5 +1,7 @@
 package praktikum.fjt.nellsoneilersjavaslumberjack.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import praktikum.fjt.nellsoneilersjavaslumberjack.model.Island;
 
 public class IslandController {
@@ -39,5 +41,13 @@ public class IslandController {
 
   public void refreshIslandSizeSpinners() {
     islandSizeChangeController.refreshSpinners();
+  }
+
+  public String getIslandXMLString() {
+    return islandSaveController.getIslandXMLString();
+  }
+
+  public boolean setIslandFromXMLString(String xmlString) {
+    return islandSaveController.setIslandFromXMLString(xmlString);
   }
 }
